@@ -633,6 +633,11 @@ class Target(pxml.BaseXmlModel, tag="target", search_mode=SearchMode.UNORDERED):
                         log.warning(
                             "The platform host in the publication file is not set to runestone. Since the requested target has @platform='runestone', we will override the publication file's platform host."
                         )
+                utils.ensure_css(
+                    xml=self.source_abspath(),
+                    pub_file=self.publication_abspath().as_posix(),
+                    stringparams=stringparams_copy,
+                )
                 core.html(
                     xml=self.source_abspath(),
                     pub_file=self.publication_abspath().as_posix(),
@@ -680,7 +685,7 @@ class Target(pxml.BaseXmlModel, tag="target", search_mode=SearchMode.UNORDERED):
                     generated_abs=self.generated_dir_abspath(),
                 )
             elif self.format == Format.EPUB:
-                utils.npm_install()
+                utils.mjsre_npm_install()
                 core.epub(
                     xml_source=self.source_abspath(),
                     pub_file=self.publication_abspath().as_posix(),
@@ -690,7 +695,7 @@ class Target(pxml.BaseXmlModel, tag="target", search_mode=SearchMode.UNORDERED):
                     stringparams=stringparams_copy,
                 )
             elif self.format == Format.KINDLE:
-                utils.npm_install()
+                utils.mjsre_npm_install()
                 core.epub(
                     xml_source=self.source_abspath(),
                     pub_file=self.publication_abspath().as_posix(),
@@ -714,7 +719,7 @@ class Target(pxml.BaseXmlModel, tag="target", search_mode=SearchMode.UNORDERED):
                 log.warning(
                     "Braille output is still experimental, and requires additional libraries from liblouis (specifically the file2brl software)."
                 )
-                utils.npm_install()
+                utils.mjsre_npm_install()
                 core.braille(
                     xml_source=self.source_abspath(),
                     pub_file=self.publication_abspath().as_posix(),
